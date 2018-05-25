@@ -3,15 +3,26 @@ import { Member } from "./class/Member";
 import { Response } from "./class/Response";
 
 Meteor.methods({
-    register({deviceId, device}) {
+    init({device}) {
         // console.log(deviceId, device);
-        if (!deviceId || !device) {
+        if (!device) {
             return new Response(false, 400, 'Bad request', {});
         }
-        const member = Member.fromJSON({deviceId, device});
+        const member = Member.fromJSON({device});
         member.save();
         const token =  member.getJSONWebToken();
         return new Response(true, 200, 'success', { token })
+    },
+    'register-device'({deviceId, token}) {
+        // console.log(deviceId, device);
+        if (!deviceId || !token) {
+            return new Response(false, 400, 'Bad request', {});
+        }
+
+
+        const member = Member.fromJSONWebToken(token);
+        member.registerDeviceId(deviceId);
+        return new Response(true, 200, 'success', { })
     },
     'add-favorite': ({token, showId}) => {
         // console.log(token, showId);

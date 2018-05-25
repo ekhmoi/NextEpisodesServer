@@ -1,6 +1,10 @@
-import { Members } from "../collections";
+import {
+    Members
+} from "../collections";
 import * as jwt from 'jsonwebtoken';
-import { Notification } from "./Notification";
+import {
+    Notification
+} from "./Notification";
 
 export const SECRET = 'Test';
 
@@ -12,9 +16,8 @@ export class Member {
     favoritesDetails = [];
     notifications = []
     _id;
-    
-    constructor() {
-    }
+
+    constructor() {}
 
 
     save(update = false) {
@@ -57,16 +60,17 @@ export class Member {
     static fromJSONWebToken(jsonWebToken) {
         try {
             const _id = jwt.verify(jsonWebToken, SECRET);
-            const fromDB = Members.findOne({ _id });
+            const fromDB = Members.findOne({
+                _id
+            });
             return Member.fromJSON(fromDB);
-        } catch(e) {
+        } catch (e) {
             return new Member();
         }
     }
 
     addFavorite(show) {
-        if (this.favorites.indexOf(show.id) > -1) {
-        } else {
+        if (this.favorites.indexOf(show.id) > -1) {} else {
             this.favorites.unshift(show.id);
             this.favoritesDetails.unshift(show);
             this.save(true);
@@ -86,5 +90,13 @@ export class Member {
             new Notification(this, show).send();
             this.save(true);
         }
+    }
+    registerDeviceId(deviceId) {
+        this.deviceId = deviceId;
+        Members.update(this._id, {
+            $set: {
+                deviceId: this.deviceId
+            }
+        });
     }
 }
