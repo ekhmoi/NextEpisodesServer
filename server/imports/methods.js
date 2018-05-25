@@ -49,7 +49,7 @@ Meteor.methods({
         try {
             member.removeFavorite(showId);
 
-            return new Response(true, 200, 'Succcess', { favorites: member.favorites })
+            return new Response(true, 200, 'Succcess', { favorites: member.favoritesDetails })
         } catch(err) { 
             // console.log(err);
             return new Response(false, 500, 'Internal Error', {});
