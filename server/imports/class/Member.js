@@ -14,7 +14,8 @@ export class Member {
     registeredAt = new Date().getTime();
     favorites = [];
     favoritesDetails = [];
-    notifications = []
+    notifications = [];
+    shouldSendNotification = true;
     _id;
 
     constructor() {}
@@ -49,6 +50,7 @@ export class Member {
         member.favorites = json.favorites ? json.favorites : member.favorites;
         member.favoritesDetails = json.favoritesDetails ? json.favoritesDetails : member.favoritesDetails;
         member.notifications = json.notifications ? json.notifications : member.notifications;
+        member.shouldSendNotification = json.shouldSendNotification ? json.shouldSendNotification : member.shouldSendNotification;
 
         if (json._id) {
             member._id = json._id;
@@ -96,6 +98,15 @@ export class Member {
         Members.update(this._id, {
             $set: {
                 deviceId: this.deviceId
+            }
+        });
+    }
+
+    setNotificationState(state) {
+        this.shouldSendNotification = state;
+        Members.update(this._id, {
+            $set: {
+                shouldSendNotification: state
             }
         });
     }

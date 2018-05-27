@@ -83,6 +83,7 @@ export class PushSender {
     }
 
     notifyMembersOfShow(show) {
+        // let member = new Member();
         let membersToNotify = this.members.filter((member) => member.favorites.indexOf(show.id) > -1);
         membersToNotify.forEach((member) => {
             member.sendNotification(show);
