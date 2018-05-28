@@ -16,10 +16,6 @@ export class Notification {
     }
 
     send() {
-        if (!Expo.isExpoPushToken(this.member.deviceId)) {
-            console.log(`Push token ${this.member.deviceId} is not a valid Expo push token`);
-            return;
-        }
         let title = this.getNotificationTitle();
         let message = this.getNotificationMessage();
 
@@ -42,6 +38,11 @@ End Sending Notification
 --------------------------
 ###
         `);
+
+        if (!Expo.isExpoPushToken(this.member.deviceId)) {
+            console.log(`Push token ${this.member.deviceId} is not a valid Expo push token`);
+            return;
+        }
 
         const messages = [{
             to: this.member.deviceId,

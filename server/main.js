@@ -11,8 +11,14 @@ import './imports/methods';
       'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
     });
-  
-    Meteor.setInterval(function()  {
-      const pushSender = new PushSender();
-    }, 3000);
+    
+    if (parseInt(process.env.NODE_APP_INSTANCE) === 0) {
+      console.log('Instance ID = 0; Starting Cron');
+      const cron = new PushSender();
+
+      Meteor.setInterval(function()  {
+        console.log('Cron Pushsender Running at ' + new Date().toISOString());
+        cron.start();
+      }, 3000);
+    }
   });

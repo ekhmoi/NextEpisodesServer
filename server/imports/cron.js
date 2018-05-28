@@ -3,7 +3,10 @@ import {
 } from "./collections";
 import { Member } from "./class/Member";
 
-const notifyBefore = 13 * 60 * 60 * 1000;
+const minute = 60000;
+const hour = 3600000;
+
+const notifyBefore = (2*hour) + (50*minute);
 
 export class PushSender {
     members = [];
@@ -12,7 +15,6 @@ export class PushSender {
     memberShowMap = new Map([]);
 
     constructor() {
-        this.start();
     }
 
     start() {
