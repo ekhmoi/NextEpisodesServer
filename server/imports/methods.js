@@ -27,7 +27,6 @@ Meteor.methods({
         deviceId,
         token
     }) {
-        console.log(deviceId, device);
         if (!deviceId || !token) {
             return new Response(false, 400, 'Bad request', {});
         }
