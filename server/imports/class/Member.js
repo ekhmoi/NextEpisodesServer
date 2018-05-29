@@ -5,6 +5,9 @@ import * as jwt from 'jsonwebtoken';
 import {
     Notification
 } from "./Notification";
+import {
+    Response
+} from "./Response";
 
 export const SECRET = 'Test';
 
@@ -16,6 +19,7 @@ export class Member {
     favoritesDetails = [];
     notifications = [];
     shouldSendNotification = true;
+    showAds = true;
     _id;
 
     constructor() {}
@@ -24,13 +28,7 @@ export class Member {
     save(update = false) {
         if (update) {
             // Update mongo
-            Members.update(this._id, {
-                $set: {
-                    favorites: this.favorites,
-                    favoritesDetails: this.favoritesDetails,
-                    notifications: this.notifications
-                }
-            });
+            Members.update(this._id, { $set: this});
         } else {
             // Insert new one
             this._id = Members.insert(this);
@@ -43,14 +41,19 @@ export class Member {
 
     static fromJSON(json) {
         let member = new Member();
+        
+        for (let key in json) {
+            member[key] = json[key];
+        }
 
-        member.device = json.device ? json.device : member.device;
-        member.deviceId = json.deviceId ? json.deviceId : member.deviceId;
-        member.registeredAt = json.registeredAt ? json.registeredAt : member.registeredAt;
-        member.favorites = json.favorites ? json.favorites : member.favorites;
-        member.favoritesDetails = json.favoritesDetails ? json.favoritesDetails : member.favoritesDetails;
-        member.notifications = json.notifications ? json.notifications : member.notifications;
-        member.shouldSendNotification = json.shouldSendNotification ? json.shouldSendNotification : member.shouldSendNotification;
+
+        // member.device = json.device ? json.device : member.device;
+        // member.deviceId = json.deviceId ? json.deviceId : member.deviceId;
+        // member.registeredAt = json.registeredAt ? json.registeredAt : member.registeredAt;
+        // member.favorites = json.favorites ? json.favorites : member.favorites;
+        // member.favoritesDetails = json.favoritesDetails ? json.favoritesDetails : member.favoritesDetails;
+        // member.notifications = json.notifications ? json.notifications : member.notifications;
+        // member.shouldSendNotification = json.shouldSendNotification ? json.shouldSendNotification : member.shouldSendNotification;
 
         if (json._id) {
             member._id = json._id;
@@ -72,10 +75,20 @@ export class Member {
     }
 
     addFavorite(show) {
-        if (this.favorites.indexOf(show.id) > -1) {} else {
-            this.favorites.unshift(show.id);
-            this.favoritesDetails.unshift(show);
-            this.save(true);
+        if (this.favorites.indexOf(show.id) > -1) {
+            // Show already exists;
+
+        } else {
+            if (this.showAds === true || (this.showAds === false && this.favorites.length < 5)) {
+                this.favorites.unshift(show.id);
+                this.favoritesDetails.unshift(show);
+                this.save(true);
+            } else {
+                console.log('User has turned off the ads. Cant add more than 5 favorites');
+                return new Response(false, 400, `Can't add more than 5 favorites when ads are hidden`, {
+                    favorites: this.favoritesDetails
+                });
+            }
         }
     }
 
@@ -93,21 +106,26 @@ export class Member {
             this.save(true);
         }
     }
+
     registerDeviceId(deviceId) {
         this.deviceId = deviceId;
-        Members.update(this._id, {
-            $set: {
-                deviceId: this.deviceId
-            }
-        });
+        this.save(true);
     }
 
     setNotificationState(state) {
         this.shouldSendNotification = state;
-        Members.update(this._id, {
-            $set: {
-                shouldSendNotification: state
+        this.save(true);
+    }
+
+    toggleAds(show) {
+        this.showAds = show;
+
+        if (this.showAds === false) {
+            if (this.favorites.length > 5) {
+                this.favorites = this.favorites.splice(0, 5);
+                this.favoritesDetails = this.favoritesDetails.splice(0, 5);
             }
-        });
+        }
+        this.save(true);
     }
 }

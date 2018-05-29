@@ -132,5 +132,28 @@ Meteor.methods({
         } catch (err) {
             return new Response(false, 500, 'Internal Error', {});
         }
+    },
+    'toggle-ads': ({
+        token,
+        state
+    }) => {
+        if (!token || typeof state === 'undefined') {
+            return new Response(false, 400, 'Bad request', {});
+        }
+
+        const member = Member.fromJSONWebToken(token);
+
+        if (!member || !member._id) {
+            return new Response(false, 404, 'User not found', {});
+        }
+
+        try {
+            member.toggleAds(state);
+            return new Response(true, 200, 'Succcess', {favorites: member.favoritesDetails});
+
+        } catch (err) {
+            console.log(err);
+            return new Response(false, 500, 'Internal Error', {});
+        }
     }
 });
