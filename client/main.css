@@ -29,22 +29,37 @@ body {
     align-items: center;
     justify-content: flex-end;
 }
-
+.overflow-hidden {
+    overflow: hidden;
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
 @keyframes cf4FadeInOut {
     0% {
-        opacity: 1;
+        /* opacity: 1; */
+    
+      transform: translateX(350px);
+      z-index: 90;
+
     }
-    17% {
-        opacity: 1;
+    3% {
+
+        transform: translateX(0);
     }
-    25% {
-        opacity: 0;
+
+    20% {
+        z-index: 80;
     }
-    92% {
-        opacity: 0;
+
+    99% {
+z-index: 0;
+        transform: translateX(0);
     }
     100% {
-        opacity: 1;
+        /* opacity: 1; */
+      transform: translateX(350px);
     }
 }
 
@@ -79,25 +94,25 @@ body {
     -webkit-animation-name: cf4FadeInOut;
     -webkit-animation-timing-function: ease-in-out;
     -webkit-animation-iteration-count: infinite;
-    -webkit-animation-duration: 8s;
+    -webkit-animation-duration: 12s;
     -moz-animation-name: cf4FadeInOut;
     -moz-animation-timing-function: ease-in-out;
     -moz-animation-iteration-count: infinite;
-    -moz-animation-duration: 8s;
+    -moz-animation-duration: 12s;
     -o-animation-name: cf4FadeInOut;
     -o-animation-timing-function: ease-in-out;
     -o-animation-iteration-count: infinite;
-    -o-animation-duration: 8s;
+    -o-animation-duration: 12s;
     animation-name: cf4FadeInOut;
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
-    animation-duration: 8s;
+    animation-duration: 12s;
     position: absolute;
     left: 0;
 }
 
 #cf4a img:not(.frame):nth-of-type(1) {
-    animation-delay: 6s;
+    animation-delay: 8s;
 }
 
 #cf4a img:not(.frame):nth-of-type(2) {
@@ -105,12 +120,9 @@ body {
 }
 
 #cf4a img:not(.frame):nth-of-type(3) {
-    animation-delay: 2s;
+    animation-delay: 0s;
 }
 
-#cf4a img:not(.frame):nth-of-type(4) {
-    animation-delay: 0;
-}
 
 .grid {
     padding: 5px;
