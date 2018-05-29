@@ -1,1 +1,285 @@
 /* CSS declarations go here */
+
+body {
+    font-family: 'Avenir';
+    margin: 0;
+    background-color: rgba(130, 109, 255, 1);
+}
+
+.header {
+    box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
+    content: "";
+    height: 56px;
+    line-height: 56px;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    padding: 0px 30px;
+    background-color: rgba(130, 109, 255, 1);
+    color: white;
+    top: 0;
+    z-index: 100;
+}
+
+.content {
+    position: relative;
+    height: 100vh;
+    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+@keyframes cf4FadeInOut {
+    0% {
+        opacity: 1;
+    }
+    17% {
+        opacity: 1;
+    }
+    25% {
+        opacity: 0;
+    }
+    92% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+#cf4a {
+    width: 350px;
+    height: 757px;
+    position: relative;
+    margin: 0 auto;
+}
+
+#cf4a .frame {
+    position: absolute;
+    z-index: 90;
+    width: 404px;
+    left: -27px;
+    top: -26px;
+}
+
+.image-col {
+    justify-content: flex-end;
+}
+
+#cf4a img:not(.frame) {
+    width: 350px;
+    -webkit-animation-name: cf4FadeInOut;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-duration: 8s;
+    -moz-animation-name: cf4FadeInOut;
+    -moz-animation-timing-function: ease-in-out;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-duration: 8s;
+    -o-animation-name: cf4FadeInOut;
+    -o-animation-timing-function: ease-in-out;
+    -o-animation-iteration-count: infinite;
+    -o-animation-duration: 8s;
+    animation-name: cf4FadeInOut;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-duration: 8s;
+    position: absolute;
+    left: 0;
+}
+
+#cf4a img:not(.frame):nth-of-type(1) {
+    animation-delay: 6s;
+}
+
+#cf4a img:not(.frame):nth-of-type(2) {
+    animation-delay: 4s;
+}
+
+#cf4a img:not(.frame):nth-of-type(3) {
+    animation-delay: 2s;
+}
+
+#cf4a img:not(.frame):nth-of-type(4) {
+    animation-delay: 0;
+}
+
+.grid {
+    padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    display: flex;
+    -webkit-box-orient: vertical;
+    flex-direction: column;
+}
+
+.grid .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.grid .row .col {
+    padding: 5px;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    min-height: 1px;
+    -webkit-flex-basis: 0;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    max-width: 100%;
+}
+
+.download-buttons-row {
+    display: flex;
+}
+
+.download-buttons-row a:first-child {
+    margin-right: 40px;
+}
+
+.download-buttons-row a {
+    width: 200px;
+    overflow: hidden;
+    position: relative;
+    transition: all 200ms linear;
+
+  font-family: "Roboto medium", sans-serif;
+  font-size: 14px;
+  display: inline-block;
+  min-width: 88px;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border:0;
+  border-radius: 2px;
+  color:#fff;
+  outline:0;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 
+  0 1px 5px 0 rgba(0, 0, 0, 0.12), 
+  0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 10px;
+    height: 59px;
+}
+
+.download-buttons-row a:hover {
+}
+
+
+.download-buttons-row a img{
+    width: 100%;
+    height: auto;
+}
+
+.description-column {
+    justify-content: center;
+    padding: 40px!important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.description-column h1, 
+.description-column h3 {
+    display: block;
+    width: 100%;
+    color: white;
+}
+
+.description-column h3 {
+
+    margin-bottom: 42px;
+}
+
+.grid .row .col.grow-5 {
+    flex-grow: 0.05
+}
+
+.grid .row .col.grow-10 {
+    flex-grow: 0.1
+}
+
+.grid .row .col.grow-15 {
+    flex-grow: 0.15
+}
+
+.grid .row .col.grow-20 {
+    flex-grow: 0.2
+}
+
+.grid .row .col.grow-25 {
+    flex-grow: 0.25
+}
+
+.grid .row .col.grow-30 {
+    flex-grow: 0.3
+}
+
+.grid .row .col.grow-35 {
+    flex-grow: 0.35
+}
+
+.grid .row .col.grow-40 {
+    flex-grow: 0.4
+}
+
+.grid .row .col.grow-45 {
+    flex-grow: 0.45
+}
+
+.grid .row .col.grow-50 {
+    flex-grow: 0.5
+}
+
+.grid .row .col.grow-55 {
+    flex-grow: 0.55
+}
+
+.grid .row .col.grow-60 {
+    flex-grow: 0.6
+}
+
+.grid .row .col.grow-65 {
+    flex-grow: 0.65
+}
+
+.grid .row .col.grow-70 {
+    flex-grow: 0.7
+}
+
+.grid .row .col.grow-75 {
+    flex-grow: 0.75
+}
+
+.grid .row .col.grow-80 {
+    flex-grow: 0.8
+}
+
+.grid .row .col.grow-85 {
+    flex-grow: 0.85
+}
+
+.grid .row .col.grow-90 {
+    flex-grow: 0.9
+}
+
+.grid .row .col.grow-95 {
+    flex-grow: 0.95
+}
+
+.grid .row .col.grow-100 {
+    flex-grow: 1
+}
