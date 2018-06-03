@@ -3,7 +3,9 @@
   "private": true,
   "scripts": {
     "start": "meteor run",
-    "test": "meteor test --once --driver-package meteortesting:mocha"
+    "debug": "meteor run --inspect",
+    "test": "meteor test --once --driver-package meteortesting:mocha",
+    "deploy": "sh deploy.sh"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.49",

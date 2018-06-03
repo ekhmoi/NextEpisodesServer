@@ -12,7 +12,7 @@ import './imports/methods';
       'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
     });
     
-    if (parseInt(process.env.NODE_APP_INSTANCE) === 0) {
+    if (parseInt(process.env.NODE_APP_INSTANCE) === 0 || true) {
       console.log('Instance ID = 0; Starting Cron');
       const cron = new PushSender();
 

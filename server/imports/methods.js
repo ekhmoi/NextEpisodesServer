@@ -10,7 +10,6 @@ import {
 
 Meteor.methods({
     init(device) {
-        console.log('recieved request', device)
         if (!device) {
             return new Response(false, 400, 'Bad request', {});
         }
@@ -20,8 +19,26 @@ Meteor.methods({
         member.save();
         const token = member.getJSONWebToken();
         return new Response(true, 200, 'success', {
-            token
-        })
+            token,
+            settings: member.getSettings()
+        });
+    },
+    'get-settings' ({
+        token
+    }) {
+        if (!token) {
+            return new Response(false, 400, 'Bad request', {});
+        }
+
+        const member = Member.fromJSONWebToken(token);
+
+        if (!member || !member._id) {
+            return new Response(false, 404, 'User not found', {});
+        }
+
+        return new Response(true, 200, 'success', {
+            settings: member.getSettings()
+        });
     },
     'register-device' ({
         deviceId,
@@ -40,7 +57,6 @@ Meteor.methods({
         token,
         showId
     }) => {
-        // console.log(token, showId);
         if (!token || !showId) {
             return new Response(false, 400, 'Bad request', {});
         }
@@ -61,7 +77,6 @@ Meteor.methods({
                 favorites: member.favoritesDetails
             })
         } catch (err) {
-            console.log(err);
             return new Response(false, 500, 'Internal Error', {});
         }
     },
@@ -86,7 +101,6 @@ Meteor.methods({
                 favorites: member.favoritesDetails
             })
         } catch (err) {
-            // console.log(err);
             return new Response(false, 500, 'Internal Error', {});
         }
     },
@@ -152,7 +166,29 @@ Meteor.methods({
             return new Response(true, 200, 'Succcess', {favorites: member.favoritesDetails});
 
         } catch (err) {
-            console.log(err);
+            return new Response(false, 500, 'Internal Error', {});
+        }
+    },
+    'notification-timing': ({
+        token,
+        value
+    }) => {
+        if (!token || typeof value === 'undefined') {
+            return new Response(false, 400, 'Bad request', {});
+        }
+
+        const member = Member.fromJSONWebToken(token);
+
+        if (!member || !member._id) {
+            return new Response(false, 404, 'User not found', {});
+        }
+
+        try {
+            member.sendNotificationBefore = value;
+            member.save(true);
+            return new Response(true, 200, 'Succcess', {favorites: member.favoritesDetails});
+
+        } catch (err) {
             return new Response(false, 500, 'Internal Error', {});
         }
     }

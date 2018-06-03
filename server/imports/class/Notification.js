@@ -40,7 +40,6 @@ End Sending Notification
         `);
 
         if (!Expo.isExpoPushToken(this.member.deviceId)) {
-            console.log(`Push token ${this.member.deviceId} is not a valid Expo push token`);
             return;
         }
 
@@ -60,9 +59,7 @@ End Sending Notification
         for (let chunk of chunks) {
             try {
             let receipts = await expo.sendPushNotificationsAsync(chunk);
-            console.log(receipts);
             } catch (error) {
-            console.error(error);
             }
         }
         })();

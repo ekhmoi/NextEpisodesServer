@@ -1,12 +1,14 @@
 import {
     Members
 } from "./collections";
-import { Member } from "./class/Member";
+import {
+    Member
+} from "./class/Member";
 
 const minute = 60000;
 const hour = 3600000;
 
-const notifyBefore = (2*hour) + (50*minute);
+const notifyBefore = 24 * hour;
 
 export class PushSender {
     members = [];
@@ -14,8 +16,7 @@ export class PushSender {
     shows = [];
     memberShowMap = new Map([]);
 
-    constructor() {
-    }
+    constructor() {}
 
     start() {
         this.memberShowMap = new Map([]);
@@ -27,10 +28,17 @@ export class PushSender {
 
     setMembers() {
         const members = Members.find({
-            favorites: {
-                $exists: true,
-                $ne: []
-            }
+
+            $and: [{
+                    shouldSendNotification: true
+                },
+                {
+                    favorites: {
+                        $exists: true,
+                        $ne: []
+                    }
+                }
+            ]
         }).map((member) => Member.fromJSON(member));
         this.members = members;
     }
@@ -41,6 +49,8 @@ export class PushSender {
             this.memberShowMap.set(member._id, member.favorites);
             this.showIds = [...this.showIds, ...member.favorites];
         });
+
+        this.showIds = [...new Set(this.showIds)];
     }
 
     setShows() {
@@ -61,7 +71,9 @@ export class PushSender {
 
     getShowNextEpisode(id) {
         return new Promise((resolve, reject) => {
-            HTTP.get('http://api.tvmaze.com/shows/' + id + '?embed=nextepisode', { followRedirects: true }, (e, r) => {
+            HTTP.get('http://api.tvmaze.com/shows/' + id + '?embed=nextepisode', {
+                followRedirects: true
+            }, (e, r) => {
                 if (e) {
                     return reject(e);
                 }
@@ -78,17 +90,24 @@ export class PushSender {
             return false;
         }
 
+        return this.getDifference(show) <= notifyBefore;
+    }
+
+    getDifference(show) {
+
         let willStartAt = new Date(show._embedded.nextepisode.airstamp);
         let now = new Date();
-
-        return willStartAt - now <= notifyBefore;
+        return willStartAt - now;
     }
 
     notifyMembersOfShow(show) {
         // let member = new Member();
+        const startsIn = this.getDifference(show);
         let membersToNotify = this.members.filter((member) => member.favorites.indexOf(show.id) > -1);
         membersToNotify.forEach((member) => {
-            member.sendNotification(show);
+            if (member.sendNotificationBefore * 60 * 60 * 1000 >= startsIn) {
+                member.sendNotification(show);
+            }
         });
     }
 }

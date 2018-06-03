@@ -20,6 +20,7 @@ export class Member {
     notifications = [];
     shouldSendNotification = true;
     showAds = true;
+    sendNotificationBefore = 10 // Hours
     _id;
 
     constructor() {}
@@ -32,6 +33,14 @@ export class Member {
         } else {
             // Insert new one
             this._id = Members.insert(this);
+        }
+    }
+
+    getSettings() {
+        return {
+            sendNotificationBefore: this.sendNotificationBefore,
+            shouldSendNotification: this.shouldSendNotification,
+            showAds: this.showAds
         }
     }
 

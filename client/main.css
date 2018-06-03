@@ -3,7 +3,7 @@
 body {
     font-family: 'Avenir';
     margin: 0;
-    background-color: rgba(130, 109, 255, 1);
+    background-image: linear-gradient(160deg,rgb(210, 155, 246) 0%,rgb(130, 108, 255) 35%, rgb(130, 108, 255) 65%, #5cffe4 100%);
 }
 
 .header {
@@ -28,6 +28,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    z-index: 1;
 }
 .overflow-hidden {
     overflow: hidden;
@@ -300,4 +301,72 @@ z-index: 0;
 
 .grid .row .col.grow-100 {
     flex-grow: 1
+}
+
+
+.rectangles-holder {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 1%;
+    transform: skew(-55deg);
+    left: 12%;
+    filter: blur(100px);
+    z-index: 0;
+}
+
+.rectangles-holder > div:nth-child(1) {
+    background: #60ebff;
+    width: 400px;
+    height: 800px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 100%;
+}
+.rectangles-holder > div:nth-child(2) {
+    background: rgba(255, 115, 65, 0.2);
+    width: 400px;
+    height: 500px;
+    position: absolute;
+    left: 400px;
+    bottom: 0px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 100%;
+}
+.rectangles-holder > div:nth-child(3) {
+    width: 600px;
+    height: 400px;
+    position: absolute;
+    bottom: 0;
+    left: 800px;
+    background: #ffffff00;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 100%;
+}
+.rectangles-holder > div:nth-child(4) {
+    background: rgba(234, 90, 15, 0.61);
+    width: 170px;
+    height: 500px;
+    right: 1265px;
+    position: absolute;
+    transform: skew(65deg);
+    top: -100px;
+    border-radius: 100%;
+}
+.rectangles-holder > div:nth-child(5) {
+    background: #ea5a0f;
+    width: 150px;
+    height: 600px;
+    right: 1000px;
+    position: absolute;
+    transform: skew(65deg);
+    top: -100px;
+    border-radius: 100%;
+}
+.rectangles-holder > div:nth-child(1) {
+
+}
+.rectangles-holder > div:nth-child(1) {
+
 }
